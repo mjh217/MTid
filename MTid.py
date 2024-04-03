@@ -25,6 +25,7 @@ def parser():
              '--> Mxx, Mxy, Mxz, Myy, Myz, Mzz\n'
              'where elements can be absolute or normalised and in any consistent unit (e.g., N-m, dyne-cm, Ak).',
         metavar="csv_file", )
+    parser.add_argument("-q", "--quiet", action="store_true", help="Silence individual event warnings.")
     parser.add_argument("-v", "--version", action="version", version="%(prog)s 2023.12")
 
     return parser.parse_args()
@@ -105,9 +106,11 @@ def main():
     P = np.einsum("i, ij->ij", 1 / np.sum(f * priors, axis=1), f * priors)
     np.savetxt("prob.csv", P, delimiter=",")
 
-    # Raise a warning if the MT most likely belongs to the first group
-    for event_number in np.where(np.argsort(P, axis=1)[:, 0] == len(populations) - 1)[0]:
-        print(f"Event {event_number + 1} likely belongs to {populations[0].event}.")
+    # Raise a warning if warnings are turned on and the MT most likely belongs to the first population type
+    if not args.quiet:
+        flagged_events = np.invert(np.argmax(P, axis=1).astype(bool)).nonzero()[0]
+        for event_number in flagged_events:
+            print(f"Event {event_number + 1} likely belongs to {populations[0].event}.")
 
     # Project MTs onto the fundamental lune of Tape & Tape (2012) for plotting purposes
     lune_coords = np.zeros((n, 2))
