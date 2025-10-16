@@ -13,7 +13,7 @@ which will state that only the first six events belong to the explosion populati
 `python MTid.py -h`
 
 ## Aspects that a user may wish to alter
-The most likely modification that a user may wish to make is to alter the prior probability that an event was an explosion from the default values of 0.9999 for explosions and 0.0001 for earthquakes (see Section 3.2 of [*Hoggard et al. 2024*](https://doi.org/10.1093/gji/ggae011)). This modification can be acheived by locating the library `populations.py` and updating the `prior =` variables, staying faithful to the fact that the sum of all priors must be equal to 1. It is also within this same library that a user may wish to update parameters that control the shape of the probability distribution functions or add new population descriptions for other types of seismic event.
+The most likely modification that a user may wish to make is to alter the prior probability that an event was an explosion, collapse or earthquake from the default values (see Section 3.2 of [*Hoggard et al. 2024*](https://doi.org/10.1093/gji/ggae011)). This modification can be acheived by locating the library `populations.py` and updating the `prior =` variables, staying faithful to the fact that the sum of all priors must be equal to 1. It is also within this same library that a user may wish to update parameters that control the shape of the probability distribution functions or add new population descriptions for other types of seismic event.
 
 ## References
 - *Hoggard, M.J., J.L. Scealy & B.G. Delbridge (2024). Seismic moment tensor classification using elliptical distribution functions on the hypersphere. Geophysical Journal International, 237, 1–13.*
